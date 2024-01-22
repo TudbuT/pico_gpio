@@ -230,15 +230,15 @@ impl<Port: SerialPort, const PINS: usize> PicoGPIO<Port, PINS> {
         self.set_manual(pin, PinValueWrite::Floating, self.blocking)
     }
 
-    pub fn d_out(&mut self, pin: usize, val: bool) -> Result<(), Error> {
+    pub fn out_d(&mut self, pin: usize, val: bool) -> Result<(), Error> {
         self.set_manual(pin, PinValueWrite::Digital(val), self.blocking)
     }
 
-    pub fn pwm_out(&mut self, pin: usize, val: u32) -> Result<(), Error> {
+    pub fn out_pwm(&mut self, pin: usize, val: u32) -> Result<(), Error> {
         self.set_manual(pin, PinValueWrite::PWM(val), self.blocking)
     }
 
-    pub fn float_in(&mut self, pin: usize) -> Result<bool, Error> {
+    pub fn in_float(&mut self, pin: usize) -> Result<bool, Error> {
         self.get_manual(pin, PinInput::Floating, false, self.blocking)
             .map(|x| match x {
                 PinValueRead::Floating(Some(x)) => x,
@@ -246,7 +246,7 @@ impl<Port: SerialPort, const PINS: usize> PicoGPIO<Port, PINS> {
             })
     }
 
-    pub fn pulldn_in(&mut self, pin: usize) -> Result<bool, Error> {
+    pub fn in_pulldn(&mut self, pin: usize) -> Result<bool, Error> {
         self.get_manual(pin, PinInput::PDown, false, self.blocking)
             .map(|x| match x {
                 PinValueRead::Digital(x) => x,
@@ -254,7 +254,7 @@ impl<Port: SerialPort, const PINS: usize> PicoGPIO<Port, PINS> {
             })
     }
 
-    pub fn pullup_in(&mut self, pin: usize) -> Result<bool, Error> {
+    pub fn in_pullup(&mut self, pin: usize) -> Result<bool, Error> {
         self.get_manual(pin, PinInput::PUp, false, self.blocking)
             .map(|x| match x {
                 PinValueRead::Digital(x) => x,
