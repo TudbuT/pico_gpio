@@ -130,8 +130,8 @@ impl<Port: SerialPort, const PINS: usize> PicoGPIO<Port, PINS> {
             }
             for line in String::from_utf8(line).unwrap().split('\n') {
                 self.parse_line(line.trim())?;
+                min_lines = min_lines.saturating_sub(1);
             }
-            min_lines = min_lines.saturating_sub(1);
         }
         Ok(())
     }

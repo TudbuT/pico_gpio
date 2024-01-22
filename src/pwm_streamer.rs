@@ -22,8 +22,15 @@ impl<Port: SerialPort, const PINS: usize> PwmStreamer<Port, PINS> {
         self.mode
     }
 
-    pub fn submit_data(&mut self, data: Vec<u8>) -> Result<(), Error> {
-        self.original.port.write_all(&data)?;
+    pub fn submit_byte(&mut self, b: u8) -> Result<(), Error> {
+        self.original.port.write_all(&[b])?;
+        self.original.port.flush()?;
+        Ok(())
+    }
+
+    pub fn submit_data(&mut self, data: &[u8]) -> Result<(), Error> {
+        self.original.port.write_all(data)?;
+        self.original.port.flush()?;
         Ok(())
     }
 }
