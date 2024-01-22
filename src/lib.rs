@@ -262,6 +262,14 @@ impl<Port: SerialPort, const PINS: usize> PicoGPIO<Port, PINS> {
             })
     }
 
+    pub fn in_analog(&mut self, pin: usize) -> Result<u32, Error> {
+        self.get_manual(pin, PinInput::Analog, false, self.blocking)
+            .map(|x| match x {
+                PinValueRead::Analog(x) => x,
+                _ => unreachable!(),
+            })
+    }
+
     pub fn init_pwm(&mut self, freq: u32, res: u8, block: bool) -> Result<(), Error> {
         self.intended.pwmres = res;
         self.intended.pwmfreq = freq;
