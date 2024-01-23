@@ -1,4 +1,4 @@
-use std::{thread::sleep, time::Duration};
+use std::time::{Duration, SystemTime};
 
 use pico_gpio::PicoGPIO;
 
@@ -8,10 +8,11 @@ fn main() -> Result<(), serialport::Error> {
         .unwrap();
     let mut gpio: PicoGPIO<_> = PicoGPIO::new(port).unwrap();
 
-    loop {
+    let t = SystemTime::now();
+    for _ in 0..1000 {
         gpio.out_d(25, true)?;
-        sleep(Duration::from_millis(500));
         gpio.out_d(25, false)?;
-        sleep(Duration::from_millis(500));
     }
+    println!("{}ms for 2000 writes", t.elapsed().unwrap().as_millis());
+    Ok(())
 }
