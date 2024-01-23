@@ -5,6 +5,6 @@ decently powerful GPIO port.
 
 ## Todo
 
-- Make a CLI interface
+- ~~Make a CLI interface~~ [CLI and multi-app Interface](https://github.com/tudbut/picogpiod)
 - Improve documentation
 - Rigorous testing
